@@ -23,6 +23,7 @@ function sources_fetch_links($site, $hosts) {
 
 	foreach ($site['threads'] as $thread) {
 		if(! is_array($thread)) continue;
+		$count = 0;
 		
 		dout("Crawling thread: " . $thread['url']);
 		curl_setopt($ch, CURLOPT_URL, $thread['url']);
@@ -39,9 +40,10 @@ function sources_fetch_links($site, $hosts) {
 			$url = parse_url($link);
 			if (in_array($url['host'], $hosts)) {
 				$result[] = $link;
+				$count ++;
 			}
 		}
-		dout("... found " . count($result) . " links.");
+		dout("... found " . $count . " links.");
 	}
 
 	curl_close($ch);

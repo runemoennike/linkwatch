@@ -5,15 +5,22 @@ function datafile_read($filename) {
 	$lines = file($filename);
 
 	$current = array();
+	$current_keys = array();
+	
 	foreach ($lines as $line) {
-		if (strlen(trim($line)) == 0) {
+		list($key, $val) = preg_split('/(\s+)/', $line, 2);
+		$val = trim($val);
+		$key = strtolower($key);
+
+		if (strlen(trim($line)) == 0 || in_array($key, $current_keys)) {
 			$result[] = $current;
 			$current = array();
-		} else {
-			list($key, $val) = explode("\t", $line);
-			$val = trim($val);
-			$key = strtolower($key);
-
+			$current_keys = array();
+		} 
+		
+		if(strlen(trim($key)) != 0) {
+			$current_keys[] = $key;
+			
 			if (substr($key, 0, 1) == '@') {
 				$subfile = dirname($filename) . '/' . $val;
 				if (is_readable($subfile)) {
