@@ -1,0 +1,6 @@
+NAME	warez-bb
+LOGIN	http://www.warez-bb.org/login.php
+LOGIN_POST	login=Log+in&username=__USER__&password=__PASS__
+USER	colamad
+PASS	12345678
+@THREADS	threads_warez-bb
