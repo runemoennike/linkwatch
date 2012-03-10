@@ -55,6 +55,9 @@ foreach ($sites as &$site) {
 dout("Writing link cache...");
 file_put_contents('data/cache', serialize($link_cache));
 
+dout("Sending start to JD.");
+jdremote_start();
+
 jdremote_close();
 
 dout("FINISHED.");

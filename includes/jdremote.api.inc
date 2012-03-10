@@ -13,9 +13,17 @@ function jdremote_close() {
 }
 
 function jdremote_download($link) {
+	return _jdremote_send('action/add/links/grabber0/start1/' . $link);
+}
+
+function jdremote_start() {
+	return _jdremote_send('action/start');
+}
+
+function _jdremote_send($cmd) {
 	global $CONFIG, $JDREMOTE;
 	
-	curl_setopt($JDREMOTE['ch'], CURLOPT_URL, $CONFIG['jdremote'] . 'action/add/links/grabber0/start1/' . $link);
+	curl_setopt($JDREMOTE['ch'], CURLOPT_URL, $CONFIG['jdremote'] . $cmd);
 	$result = curl_exec($JDREMOTE['ch']);
 	
 	return $result !== FALSE;
