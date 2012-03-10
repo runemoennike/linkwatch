@@ -11,8 +11,8 @@ function sources_fetch_links($site, $hosts) {
 	curl_setopt($ch, CURLOPT_HEADER, FALSE);
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
 	curl_setopt($ch, CURLOPT_COOKIESESSION, TRUE);
-	curl_setopt($ch, CURLOPT_COOKIEJAR, "cookiejar.txt");
-	curl_setopt($ch, CURLOPT_COOKIEFILE, "cookiejar.txt");
+	curl_setopt($ch, CURLOPT_COOKIEJAR, "data/cookiejar");
+	curl_setopt($ch, CURLOPT_COOKIEFILE, "data/cookiejar");
 
 	curl_setopt($ch, CURLOPT_URL, $site['login']);
 	curl_setopt($ch, CURLOPT_POST, TRUE);
@@ -22,7 +22,9 @@ function sources_fetch_links($site, $hosts) {
 	$transfer = curl_exec($ch);
 
 	foreach ($site['threads'] as $thread) {
-		dout("Crawling thread: " . $thread);
+		if(! is_array($thread)) continue;
+		
+		dout("Crawling thread: " . $thread['url']);
 		curl_setopt($ch, CURLOPT_URL, $thread['url']);
 		curl_setopt($ch, CURLOPT_HTTPGET, TRUE);
 
