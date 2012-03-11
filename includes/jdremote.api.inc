@@ -20,6 +20,10 @@ function jdremote_start() {
 	return _jdremote_send('action/start');
 }
 
+function jdremote_alive() {
+	return _jdremote_send('get/version');
+}
+
 function _jdremote_send($cmd) {
 	global $CONFIG, $JDREMOTE;
 	

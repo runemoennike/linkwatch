@@ -8,6 +8,15 @@ include "includes/datafile.api.inc";
 
 jdremote_init();
 
+dout("Checking JDRemote...");
+if(jdremote_alive()) {
+	dout("... running.");
+} else {
+	dout("... FAILED. Aborting.");
+	jdremote_close();
+	die();
+}
+
 dout("Loading data...");
 $sites = datafile_read('data/sites');
 $hosts = datafile_read('data/hosts');
