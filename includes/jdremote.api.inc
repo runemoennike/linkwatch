@@ -4,6 +4,13 @@ function jdremote_init() {
 	
 	$JDREMOTE['ch'] = curl_init();
 	curl_setopt($JDREMOTE['ch'], CURLOPT_RETURNTRANSFER, TRUE);
+	
+	if(jdremote_alive()) {
+		return true;	
+	} else {
+		jdremote_close();
+		return false;
+	}
 }
 
 function jdremote_close() {

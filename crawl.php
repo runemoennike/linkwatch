@@ -6,14 +6,8 @@ include "includes/jdremote.api.inc";
 include "includes/sources.api.inc";
 include "includes/datafile.api.inc";
 
-jdremote_init();
-
-dout("Checking JDRemote...");
-if(jdremote_alive()) {
-	dout("... running.");
-} else {
-	dout("... FAILED. Aborting.");
-	jdremote_close();
+if(! jdremote_init()) {
+	dout("JDRemote not reachable. Aborting.");
 	die();
 }
 
