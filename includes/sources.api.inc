@@ -39,7 +39,7 @@ function sources_fetch_links($site, $hosts) {
 			$link = str_replace('&#58;', ':', $link);
 			$url = parse_url($link);
 			if (in_array($url['host'], $hosts)) {
-				$result[] = $link;
+				$result[] = array('link' => $link, 'thread' => $thread['url']);
 				$count ++;
 			}
 		}

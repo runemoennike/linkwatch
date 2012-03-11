@@ -1,10 +1,10 @@
 <?php
 
-include "includes/config.inc";
-include "includes/util.inc";
-include "includes/jdremote.api.inc";
-include "includes/sources.api.inc";
-include "includes/datafile.api.inc";
+include_once "includes/config.inc";
+include_once "includes/util.inc";
+include_once "includes/jdremote.api.inc";
+include_once "includes/sources.api.inc";
+include_once "includes/datafile.api.inc";
 
 if(! jdremote_init()) {
 	dout("JDRemote not reachable. Aborting.");
@@ -19,7 +19,7 @@ dout("Loading link cache...");
 if(is_readable('data/cache')) {
 	$link_cache = unserialize(file_get_contents('data/cache'));
 } else {
-	$link_cache = array();
+	$link_cache = array('_threads' => array());
 }
 
 foreach ($sites as &$site) {
@@ -33,8 +33,20 @@ foreach ($sites as &$site) {
 	dout("Site crawl resulted in " . count($links) . " total links.");
 
 	foreach ($links as $link) {
+		$thread = $link['thread'];
+		$link = $link['link'];
+		
 		if (!isset($link_cache[$link])) {
 			$link_cache[$link] = array('added_time' => time(), 'downloaded' => false);
+		}
+		
+		if(! is_array($link_cache['_threads'][$thread])) {
+			$link_cache['_threads'][$thread] = array();
+		}
+		
+		if(! in_array($link, $link_cache['_threads'][$thread])) {
+			$link_cache['_threads'][$thread]['links'][] = $link;
+			$link_cache['_threads'][$thread]['last_scan'] = time(); 
 		}
 
 		if (!$link_cache[$link]['downloaded']) {
@@ -54,6 +66,8 @@ foreach ($sites as &$site) {
 	
 	dout("Site crawl results: " . $new_count . " new links, of which " . $new_fail_count . " could not be sent to JD. " . $skipped_count . " links where skipped.");
 }
+
+file_put_contents('data/log', 'New: ' . $new_count . ' Fail: ' . $new_fail_count . ' Skipped: ' . $skipped_count);
 
 dout("Writing link cache...");
 file_put_contents('data/cache', serialize($link_cache));
