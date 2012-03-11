@@ -59,5 +59,4 @@ dout("Sending start to JD.");
 jdremote_start();
 
 jdremote_close();
-
 dout("FINISHED.");
