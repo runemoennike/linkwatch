@@ -28,4 +28,5 @@
 </ul>
 
 <h2>Last crawl output</h2>
-<?php echo file_get_contents('data/log') ?>
+<pre><?php echo file_get_contents('data/log') ?>
+</pre>

@@ -7,7 +7,7 @@ include_once "includes/sources.api.inc";
 include_once "includes/datafile.api.inc";
 
 if(! jdremote_init()) {
-	dout("JDRemote not reachable. Aborting.");
+	dlog(dout("JDRemote not reachable. Aborting."));
 	die();
 }
 
@@ -67,7 +67,11 @@ foreach ($sites as &$site) {
 	dout("Site crawl results: " . $new_count . " new links, of which " . $new_fail_count . " could not be sent to JD. " . $skipped_count . " links where skipped.");
 }
 
-file_put_contents('data/log', 'New: ' . $new_count . ' Fail: ' . $new_fail_count . ' Skipped: ' . $skipped_count);
+if($new_count + $new_fail_count + $skipped_count == 0) {
+	dlog(dout("No threads or all threads failed.", true));
+} else {
+	dlog('New: ' . $new_count . ' Fail: ' . $new_fail_count . ' Skipped: ' . $skipped_count);
+}
 
 dout("Writing link cache...");
 file_put_contents('data/cache', serialize($link_cache));
