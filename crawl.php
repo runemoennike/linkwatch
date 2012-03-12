@@ -22,8 +22,15 @@ if(is_readable('data/cache')) {
 	$link_cache = array('_threads' => array());
 }
 
+$link_cache['_threads'] = array();
+
 foreach ($sites as &$site) {
 	if(! is_array($site)) continue;
+		
+	foreach($site['threads'] as $thread) {
+		if(! is_array($thread)) continue;
+		$link_cache['_threads'][$thread['url']]['last_scan'] = time();
+	}
 	
 	$links = sources_fetch_links($site, $hosts);
 	$skipped_count = 0;
@@ -40,13 +47,8 @@ foreach ($sites as &$site) {
 			$link_cache[$link] = array('added_time' => time(), 'downloaded' => false);
 		}
 		
-		if(! is_array($link_cache['_threads'][$thread])) {
-			$link_cache['_threads'][$thread] = array();
-		}
-		
 		if(! in_array($link, $link_cache['_threads'][$thread])) {
 			$link_cache['_threads'][$thread]['links'][] = $link;
-			$link_cache['_threads'][$thread]['last_scan'] = time(); 
 		}
 
 		if (!$link_cache[$link]['downloaded']) {
