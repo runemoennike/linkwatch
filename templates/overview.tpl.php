@@ -13,6 +13,7 @@
 	if(!is_array($site)) continue;?>
 	<li>
 		<?php echo ucwords($site['name']) ?>
+		(<?php echo interface_link('Add thread', array('page' => 'threadmgmt', 'action' => 'add', 'site' => $site['name'])); ?>) 
 		<ul>
 		<?php foreach($site['threads'] as $thread) :
 			if(!is_array($thread)) continue;?>

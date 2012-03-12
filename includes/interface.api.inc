@@ -6,6 +6,12 @@ function interface_set_default($page) {
 	$INTERFACE['default_page'] = $page;
 }
 
+function interface_set_baseurl($baseurl) {
+	global $INTERFACE;
+	
+	$INTERFACE['baseurl'] = $baseurl;
+}
+
 function interface_exec($page) {
 	global $INTERFACE;
 	
@@ -29,3 +35,14 @@ function interface_set_title($title) {
 	
 	$INTERFACE['title'] = $title;
 }
+
+function interface_link($title, $opts) {
+	global $INTERFACE; 
+	
+	$query_parts = array();
+	foreach($opts as $key => $val) {
+		$query_parts[] = $key . '=' . $val;
+	}
+	echo '<a href="' . $INTERFACE['baseurl'] . '?' . implode('&', $query_parts) . '">' . $title . '</a>';
+}
+	

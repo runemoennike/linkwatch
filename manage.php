@@ -21,5 +21,6 @@ if(is_readable('data/cache')) {
 	$LINK_CACHE = array();
 }
 
+interface_set_baseurl($_SERVER['PHP_SELF']);
 interface_set_default("overview");
 interface_exec($_GET['action']);
