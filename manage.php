@@ -21,6 +21,8 @@ if(is_readable('data/cache')) {
 	$LINK_CACHE = array();
 }
 
+$CONFIG['verbose'] = false;
+
 interface_set_baseurl($_SERVER['PHP_SELF']);
 interface_set_default("overview");
-interface_exec($_GET['action']);
+interface_exec($_GET['page'], $_GET['action']);

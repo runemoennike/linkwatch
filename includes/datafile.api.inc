@@ -41,6 +41,15 @@ function datafile_read($filename) {
 	return $result;
 }
 
+function datafile_find($array, $key, $value) {
+	foreach($array as $idx => $block) {
+		if($block[$key] == $value) {
+			return $idx;
+		}
+	}
+	return NULL;
+}
+
 function datafile_write($data) {
 	if (isset($data['_'])) {
 		$fh = fopen($data['_'], 'w');

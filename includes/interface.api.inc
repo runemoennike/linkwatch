@@ -12,7 +12,7 @@ function interface_set_baseurl($baseurl) {
 	$INTERFACE['baseurl'] = $baseurl;
 }
 
-function interface_exec($page) {
+function interface_exec($page, $action = '') {
 	global $INTERFACE;
 	
 	$action_page = preg_replace('/[^a-z]/i', '', strtolower($_GET['page']));
@@ -24,7 +24,7 @@ function interface_exec($page) {
 	include 'pages/' . $action_page . '.inc';
 	
 	$vars = array();
-	$vars['content'] = call_user_func($action_page . '_page');
+	$vars['content'] = call_user_func($action_page . (strlen($action) > 0 ? '_' . $action : '') . '_page');
 	$vars['title'] = $INTERFACE['title'];
 	
 	echo templates_exec("page", $vars);
@@ -37,12 +37,16 @@ function interface_set_title($title) {
 }
 
 function interface_link($title, $opts) {
+	echo '<a href="' . interface_url($opts) . '">' . $title . '</a>';
+}
+	
+function interface_url($opts) {
 	global $INTERFACE; 
 	
 	$query_parts = array();
 	foreach($opts as $key => $val) {
 		$query_parts[] = $key . '=' . $val;
 	}
-	echo '<a href="' . $INTERFACE['baseurl'] . '?' . implode('&', $query_parts) . '">' . $title . '</a>';
+	return $INTERFACE['baseurl'] . '?' . implode('&', $query_parts);
 }
 	
