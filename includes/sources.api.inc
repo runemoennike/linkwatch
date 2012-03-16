@@ -38,7 +38,7 @@ function sources_fetch_links($site, $hosts) {
 		foreach ($links as $idx => &$link) {
 			$link = str_replace('&#58;', ':', $link);
 			$url = parse_url($link);
-			if (in_array($url['host'], $hosts)) {
+			if (sources_valid_host($url['host'], $hosts)) {
 				$result[] = array('link' => $link, 'thread' => $thread['url']);
 				$count ++;
 			}
@@ -49,4 +49,11 @@ function sources_fetch_links($site, $hosts) {
 	curl_close($ch);
 
 	return $result;
+}
+
+function sources_valid_host($url_host, $hosts) {
+	foreach($hosts as $host) {
+		if($url_host == $host['pattern']) return true;	
+	}
+	return false;
 }

@@ -26,8 +26,6 @@ function datafile_read($filename) {
 				if (is_readable($subfile)) {
 					$current[substr($key, 1)] = datafile_read($subfile);
 				}
-			} elseif ($key == '#') {
-				$result[] = $val;
 			} else {
 				$current[$key] = $val;
 			}
@@ -60,7 +58,7 @@ function datafile_write($data) {
 				$key = strtoupper($key);
 				if (is_array($val)) {
 					if (isset($val['_'])) {
-						fwrite($fh, "@" . $key . "\t" . $val['_']);
+						fwrite($fh, "@" . $key . "\t" . basename($val['_']));
 						datafile_write($val);
 					} else {
 						fwrite($fh, "$" . $key . "\t" . serialize($val));
