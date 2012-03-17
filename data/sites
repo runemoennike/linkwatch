@@ -3,4 +3,7 @@ LOGIN	http://www.warez-bb.org/login.php
 LOGIN_POST	login=Log+in&username=__USER__&password=__PASS__
 USER	colamad
 PASS	12345678
+TITLE_PATTERN	/<title>(\[.*?\])? ?(.*?)( ::.*?)?<\/title>/i
+TITLE_PATTERN_IDX	2
 @THREADS	threads_warez-bb
+

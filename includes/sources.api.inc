@@ -1,5 +1,5 @@
 <?php
-function sources_fetch_links($site, $hosts) {
+function sources_fetch_links(&$site, $hosts) {
 	dout("Processing site: " . $site['name']);
 
 	$result = array();
@@ -21,7 +21,7 @@ function sources_fetch_links($site, $hosts) {
 
 	$transfer = curl_exec($ch);
 
-	foreach ($site['threads'] as $thread) {
+	foreach ($site['threads'] as &$thread) {
 		if(! is_array($thread)) continue;
 		$count = 0;
 		
@@ -31,9 +31,13 @@ function sources_fetch_links($site, $hosts) {
 
 		$transfer = curl_exec($ch);
 
-		$links = array();
-		preg_match_all('/(https?)(:|&#58;)\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[A-Z0-9+&@#\/%=~_|]/is', $transfer, $links);
-		$links = $links[0];
+		$links_match = array();
+		preg_match_all('/(https?)(:|&#58;)\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[A-Z0-9+&@#\/%=~_|]/is', $transfer, $links_match);
+		$links = $links_match[0];
+		
+		$title_match = array();
+		preg_match($site['title_pattern'], $transfer, $title_match);
+		$thread['title'] = $title_match[$site['title_pattern_idx']];
 
 		foreach ($links as $idx => &$link) {
 			$link = str_replace('&#58;', ':', $link);

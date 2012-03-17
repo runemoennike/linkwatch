@@ -78,6 +78,9 @@ if($new_count + $new_fail_count + $skipped_count == 0) {
 dout("Writing link cache...");
 file_put_contents('data/cache', serialize($link_cache));
 
+dout("Saving site data...");
+datafile_write($sites);
+
 dout("Sending start to JD.");
 jdremote_start();
 

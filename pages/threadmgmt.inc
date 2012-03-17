@@ -24,6 +24,26 @@ function threadmgmt_add_preview_page() {
 	$site['threads'] = array(array('url' => $vars['thread_url']));
 	
 	$vars['links'] = sources_fetch_links($site, $HOSTS);
+	$vars['thread_title'] = $site['threads'][0]['title'];
 	return templates_exec("thread_add_preview", $vars);	
+}
+
+function threadmgmt_thread_add_submit_page() {
+	global $HOSTS, $SITES;
+	interface_set_title("Thread Added");
+	
+	$vars['site_name'] = $_POST['site_name'];
+	$vars['thread_url'] = $_POST['thread_url'];
+	$vars['thread_title'] = $_POST['thread_title'];
+	
+	$SITES[datafile_find($SITES, 'name', $vars['site_name'])]['threads'][] = array('url' => $vars['thread_url'], 'title' => $vars['thread_title']);
+	
+	if(is_array($_POST['skip'])) {
+		foreach($_POST['skip'] as $url) {
+			$link_cache[$url]['downloaded'] = true;
+		}
+	}
+	
+	return templates_exec('thread_add_submit_status', $vars);
 }
 	

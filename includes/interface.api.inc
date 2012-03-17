@@ -43,6 +43,10 @@ function interface_link($title, $opts) {
 function interface_url($opts) {
 	global $INTERFACE; 
 	
+	if(is_string($opts)) {
+		return $opts;
+	}
+	
 	$query_parts = array();
 	foreach($opts as $key => $val) {
 		$query_parts[] = $key . '=' . $val;

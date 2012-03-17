@@ -26,3 +26,8 @@ $CONFIG['verbose'] = false;
 interface_set_baseurl($_SERVER['PHP_SELF']);
 interface_set_default("overview");
 interface_exec($_GET['page'], $_GET['action']);
+
+
+file_put_contents('data/cache', serialize($link_cache));
+datafile_write($SITES);
+datafile_write($HOSTS);
