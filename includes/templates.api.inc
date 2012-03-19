@@ -1,6 +1,6 @@
 <?php
 
-function templates_exec($template, $vars) {
+function templates_exec($template, $vars = array()) {
 	ob_start();
 	ob_implicit_flush(false);
 	
