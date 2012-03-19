@@ -27,3 +27,16 @@ function hostmgmt_add_submit_page() {
 	return templates_exec('host_add_submit_status', $vars); 
 }
 	
+function hostmgmt_delete_page() {
+	global $HOSTS;
+	
+	interface_set_title("Accepted Host Removed");
+	
+	$idx = datafile_find($HOSTS, 'pattern', $_GET['host']);
+	unset($HOSTS[$idx]);
+	
+	$vars = array();
+	$vars['host'] = $_GET['host'];
+	return templates_exec('host_remove_submit_status', $vars); 
+}
+	
