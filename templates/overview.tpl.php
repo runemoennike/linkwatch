@@ -37,3 +37,14 @@
 <h2>Last crawl output</h2>
 <pre><?php echo file_get_contents('data/log') ?>
 </pre>
+
+<h2>Configuration</h2>
+
+<h3>Accepted Hosts</h3>
+<ul>
+<?php foreach($HOSTS as $host) :
+	if(!is_array($host)) continue; ?>
+	<li><?php echo $host['pattern']?></li>
+<?php endforeach; ?>
+</ul>
+<?php echo templates_exec('host_add_form', array()) ?>
