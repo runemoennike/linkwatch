@@ -28,6 +28,6 @@ interface_set_default("overview");
 interface_exec($_GET['page'], $_GET['action']);
 
 
-file_put_contents('data/cache', serialize($link_cache));
+file_put_contents('data/cache', serialize($LINK_CACHE));
 datafile_write($SITES);
 datafile_write($HOSTS);
