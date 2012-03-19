@@ -18,7 +18,7 @@ function sitemgmt_add_submit_page() {
 	interface_set_title("Site Added");
 	
 	$site = array(
-		'name' => $_POST['name'],
+		'name' => preg_replace('/[^a-zA-Z0-9\-_\(\)\/]/', '_', $_POST['name']),
 		'login' => $_POST['login'],
 		'login_post' => $_POST['login_post'],
 		'user' => $_POST['user'],
