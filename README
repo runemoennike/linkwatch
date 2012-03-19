@@ -1,1 +1,28 @@
 LinkWatch
+
+Crawls threads on one or more forum sites and add any new links to JDownloader using JD Remote Control
+
+Features:
+	- Login on forum sites (or other sites for that matter).
+	- Crawl threads (or other pages) and extract URLs.
+	- Ability to filter URLs added based on hostname.
+	- Add extracted links for download in JDownloader
+	- Remember links so they aren't added on next crawl again.
+	- Very simple management interface to manage stuff.
+	- Uses flat files, no database required.
+
+Requirements:
+	- JDownloader with JD Remote Control enabled (v. 9568)
+	- PHP (mysql not required) for the crawler (CLI or browser)
+	- Apache or other server (with PHP installed and configured) to access management interface
+	
+Setup:
+	- install.php should be run first (will be autorun if you navigate in browser to project root url)
+	- Change the $CONFIG['jdremote'] line in includes/config.inc if your JD Remote Control is not accessible on localhost:10025.
+	
+Usage:
+	- crawl.php crawls the sites/threads. Run from command line/schedular with "php -f crawl.php", must be run from project root folder.
+	- manage.php is the management interface, use it to add sites, threads, and accepted hosts (for links). Also shows some basic stats.
+
+Notes:
+Not my responsibity what kind of links and sites you crawl/add to JD using these scripts. I simply made it for the technical challenge.
